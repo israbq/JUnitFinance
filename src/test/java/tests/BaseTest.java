@@ -7,8 +7,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
     protected WebDriver driver;
@@ -18,11 +16,11 @@ public class BaseTest {
             repiteContrasena, telefono, nacimiento, numTarjeta, expiracion,
             cvv, botonRegistro;
     protected WebElement botonLogin;
-    protected WebElement imageUsuarioEnUso;
+    protected WebElement imagenUsuarioEnUso;
     protected WebElement contrasenaDiferente;
-
-
-
+    protected WebElement enlaceQuote, enlaceBuy, enlaceSell, enlaceHistory,
+            enlaceLogout, tablaCash;
+    protected WebElement imagenLoginFallido;
 
 
     @Before
@@ -32,8 +30,9 @@ public class BaseTest {
 
     @After
     public void after() {
-    //driver.quit();
+    driver.quit();
     }
+
 
     protected void ingresarPagina(String url) {
         driver.get(url);
@@ -80,7 +79,7 @@ public class BaseTest {
     }
 
     protected void clicRegister() throws Exception {
-        explicitWait = new WebDriverWait(driver,5);
+
         try {
             linkRegistro = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href='/register']")));
             if(linkRegistro.isDisplayed()){
@@ -94,7 +93,7 @@ public class BaseTest {
     }
 
     protected void Login(String username, String password) throws Exception{
-        explicitWait = new WebDriverWait(driver,10);
+    explicitWait = new WebDriverWait(driver,10);
         try{
             usuario = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[name='username']")));
             contrasena = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[name='password']")));
@@ -103,9 +102,8 @@ public class BaseTest {
 
             botonLogin = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn")));
             if(botonLogin.isDisplayed()){
-
                 botonLogin.click();
-                System.out.println("El inicio de sesión fue correcto");
+                System.out.println("Clic al botón inicio de sesión fue correcto");
             }else{
              throw new Exception("El inicio de sesión no se pudo completar, revisa la prueba");
             }
@@ -116,8 +114,8 @@ public class BaseTest {
 
     protected void mensajeUsuarioEnUso(){
         try{
-            imageUsuarioEnUso = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.border")));
-            explicitWait.until(ExpectedConditions.attributeContains(imageUsuarioEnUso,"src","already-taken"));
+            imagenUsuarioEnUso = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.border")));
+            explicitWait.until(ExpectedConditions.attributeContains(imagenUsuarioEnUso,"src","already-taken"));
             System.out.println("La imagen de usuario en uso es visible");
         }catch (TimeoutException e){
             System.out.println("La imagen de usuario en uso no se visualiza");
@@ -131,6 +129,38 @@ public class BaseTest {
             System.out.println("La imagen de contraseña diferentes es visible");
         }catch (TimeoutException e){
             System.out.println("La imagen de contraseña diferentes NO es visible");
+        }
+    }
+    protected void despuesLogin(){
+        try{
+            enlaceQuote = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href='/quote']")));
+            enlaceBuy = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href='/buy']")));
+            enlaceSell = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href='/sell']")));
+            enlaceHistory = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href='/history']")));
+            enlaceLogout = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href='/logout']")));
+            tablaCash = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr/td[contains(.,'CASH')]")));
+
+            System.out.println("Los elementos de la página principal se muestran correctamente");
+        }catch (NoSuchElementException e){
+            System.out.println("Los elementos de la página principal NO se muestran");
+        }
+    }
+    protected void loginFallido(){
+        try{
+            imagenLoginFallido = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.border")));
+            explicitWait.until(ExpectedConditions.attributeContains(imagenLoginFallido,"src","invalid-username"));
+            System.out.println("La imagen de usuario inválido se visualiza");
+        }catch (TimeoutException e){
+            System.out.println("La imagen de usuario inválido NO se visualiza");
+        }
+    }
+    protected void loginVacio(){
+        try{
+            imagenLoginFallido = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.border")));
+            explicitWait.until(ExpectedConditions.attributeContains(imagenLoginFallido,"src","must-provide"));
+            System.out.println("La imagen de proporcionar un usuario se visualiza");
+        }catch (TimeoutException e){
+            System.out.println("La imagen de proporcionar un usuario NO se visualiza");
         }
     }
 }

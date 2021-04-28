@@ -5,20 +5,21 @@ import org.junit.Test;
 
 public class LoginSuite extends BaseTest {
     @Test
-    public void happyPathLogin(){
-        //metodo1();
+    public void happyPathLogin() throws Exception{
         ingresarPagina("http:vamonos-finance.herokuapp.com");
-        //metodo2();
-        //clicLogin("israel.bibiano","test1234");
-        //validacionLogin();
-    }
-
-    @Test
-    public void invalidLogin(){
-
+        Login("israel.bibiano","prueba123");
+        despuesLogin();
     }
     @Test
-    public void emptyFieldLogin(){
-
+    public void invalidLogin() throws Exception{
+        ingresarPagina("http:vamonos-finance.herokuapp.com");
+        Login("israel.bibiano","prueba1234");
+        loginFallido();
+    }
+    @Test
+    public void emptyFieldLogin() throws Exception{
+        ingresarPagina("http:vamonos-finance.herokuapp.com");
+        Login("", "");
+        loginVacio();
     }
 }

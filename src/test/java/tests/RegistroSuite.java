@@ -11,6 +11,7 @@ public class RegistroSuite extends BaseTest{
         llenarInformacion("Israel", "Bibiano", "israel.bibiano2", "israel@yopmail.com", "prueba123",
                 "prueba123","5582159913", "12/12/2020","4152415241524152", "12/12", "012");
         Login("israel.bibiano","prueba123");
+        despuesLogin();
     }
     @Test
     public void usuarioRegistrado() throws Exception {
