@@ -9,8 +9,8 @@ public class LoginSuite extends BaseTest {
         //metodo1();
         ingresarPagina("http:vamonos-finance.herokuapp.com");
         //metodo2();
-        clicLogin("israel.bibiano","test1234");
-        validacionLogin();
+        //clicLogin("israel.bibiano","test1234");
+        //validacionLogin();
     }
 
     @Test
